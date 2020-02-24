@@ -1,0 +1,205 @@
+void menu()
+{
+	printf("●●●●●●●●●●v●●●●●●●●●●\n");
+	printf("                  三子棋                 \n");
+	printf("              1、 开始游戏               \n");
+	printf("              2、 退出游戏               \n");
+	printf("●●●●●●●●●●v●●●●●●●●●●\n");
+}
+
+int main()
+{
+	int select = 0;
+	srand((unsigned int)time(NULL));				
+	do
+	{
+		menu();
+		printf("请选择：");
+		scanf("%d", &select);
+		switch (select)
+		{
+		case 1:
+			game();
+			break;
+		case 2:
+			printf("退出游戏\n");
+			break;
+		default:
+			printf("输入错误，请重新输入\n");
+		}
+	} while (select!=2);
+
+	system("pause");
+	return 0;
+}
+//初始化棋盘
+void init_board(char a[ROW][COL], int row, int col)
+{
+	int i, j;
+	for (i = 0; i < row; i++)
+	{
+		for (j = 0; j < col; j++)
+		{
+			a[i][j] = ' ';
+		}
+	}
+}
+//打印棋盘
+void display_board(char a[ROW][COL], int row, int col)
+{
+	int i, j;
+	for (i = 0; i< row; i++)
+	{
+		for (j = 0; j < col; j++)
+		{
+			printf(" %c ", a[i][j]);
+			if (j<col - 1)
+			{
+				printf("|");
+			}
+		}
+		printf("\n");
+		if (i < row - 1)
+		{
+			for (j = 0; j < col; j++)
+			{
+				printf("___");
+				if (j<col - 1)
+				{
+					printf("|");
+				}
+			}
+		}
+		printf("\n");
+	}
+}
+
+
+
+
+//玩家下棋
+void go_player(char a[ROW][COL], int row, int col)
+{
+	int m = 0, n = 0;
+	printf("玩家下棋：\n");
+	while (1)									
+	{
+		printf("请输入下棋的坐标：");
+		scanf("%d%d", &m, &n);
+		if ((m >= 1) && (m <= row) && (n >= 1) && (n <= col))
+		{
+			if (a[m - 1][n - 1] == ' ')
+			{
+				a[m - 1][n - 1] = '*';
+				break;
+			}
+			else
+				printf("该坐标被占用，请重新落子\n");
+
+		}
+		else
+		{
+			printf("坐标有误，请重新输入\n");
+		}
+	}
+
+}
+//电脑下棋
+void go_computer(char a[ROW][COL], int row, int col)
+{
+	printf("电脑下棋：\n");
+	while (1)
+	{
+		int r1 = rand() % row;
+		int r2 = rand() % col;
+		if (a[r1][r2] == ' ')
+		{
+			a[r1][r2] = '#';
+			break;
+		}
+	}
+}
+
+static int isFULL(char a[ROW][COL], int row, int col)
+{
+	int i, j;
+	for (i = 0; i < row; i++)
+	{
+		for (j = 0; j < col; j++)
+		{
+			if (a[i][j] ==' ')
+			{
+				return 0;
+			}
+		}
+	}
+	return 1;
+}
+
+char judge_win(char a[ROW][COL], int row, int col)
+{
+	int i;
+	//判断行是否相等
+	for (i = 0; i < row; i++)
+	{
+		if (a[i][0] == a[i][1] && a[i][1] == a[i][2] && a[i][0] != ' ')
+		{
+			return a[i][0];
+		}
+	}
+	//判断列是否相等
+	for (i = 0; i < col; i++)
+	{
+		if (a[0][i] == a[1][i] && a[1][i] == a[2][i] && a[0][i] != ' ')
+		{
+			return a[0][i];
+		}
+	}
+	//判断两个对角线是否相等
+	if (a[0][0] == a[1][1] && a[1][1] == a[2][2] && a[0][0] != ' ')
+	{
+		return a[0][0];
+	}
+	if (a[0][2] == a[1][1] && a[1][1] == a[2][0] && a[0][2] != ' ')
+	{
+		return a[0][2];
+	}
+	//判断平局，棋盘是否满了
+	if (isFULL(a, ROW, COL) == 1)
+	{
+		return 'Q';
+	}
+	return 'C';
+}
+void game()
+{
+	char board[ROW][COL] = { 0 };
+	char ret = 0;
+	init_board(board, ROW, COL);
+	display_board(board, ROW, COL);			//初始棋盘并显示
+
+	while (1)								//游戏进行，一边下一边判断输赢
+	{
+		go_player(board, ROW, COL);
+		display_board(board, ROW, COL);
+		ret = judge_win(board, ROW, COL);
+		if (ret != 'C')
+			break;
+
+		go_computer(board, ROW, COL);
+		display_board(board, ROW, COL);
+		ret = judge_win(board, ROW, COL);
+		if (ret != 'C')
+			break;
+	}
+
+	if (ret='*')				//不继续跳出后判断谁赢
+	{
+		printf("恭喜您获胜！\n");
+	}
+	else if (ret = '#')
+	{
+		printf("电脑获胜 \n");
+	}
+	
+}
