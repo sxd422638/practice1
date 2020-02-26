@@ -1,0 +1,21 @@
+#include<stdio.h>
+#include <stdlib.h>
+#pragma warning (disable:4996)
+unsigned int reverse_bit(unsigned int x){
+	unsigned int a = 0;
+	 int b = 0;
+	for (int i = 0; i < 32; i++){
+
+		a = x & 1;//取出最后一位数
+		x = x >> 1;//把值右移一位
+		b = b+(a << (31 - i));//把每次末尾取出来的值都放在变量里，其实整体相当于把二进制数转置了一下
+	}
+	return b;
+}
+
+int main(){
+	int a = 0;
+	scanf("%d", &a);
+	printf("%u", reverse_bit(a));
+	system("pause");
+}
