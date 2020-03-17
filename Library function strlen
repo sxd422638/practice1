@@ -1,0 +1,57 @@
+int my_strlen(const char* str)
+{
+	assert(str);
+
+	int count = 0;
+	//while (*str != '\0')
+	while (*str)
+	{
+		++count;
+		++str;
+	}
+
+	return count;
+}
+
+int my_strlen(const char* str)
+{
+	assert(str);
+
+	if (*str == '\0')
+	{
+		return 0;
+	}
+	else
+	{
+		return 1 + strlen(str + 1);
+	}
+}
+
+int my_strlen(const char* str)
+{
+	assert(str);
+
+	const char* end = str;
+	while (*end)
+		++end;
+
+	return end - str;
+}
+
+int f(int n)
+{
+	if (n == 1)
+		return 1;
+
+	return f(n - 1) + n;
+}
+
+int main()
+{
+	char* p = "helloworld";
+	printf("%d\n", strlen(p));
+	printf("%d\n", my_strlen(p));
+	//printf("%d\n", f(100000));
+
+	return 0;
+}
