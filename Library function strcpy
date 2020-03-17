@@ -1,0 +1,42 @@
+char* my_strcpy(char* dst, const char* src)
+{
+	assert(dst);
+	assert(src);
+
+	char* ret = dst;
+	while (*dst++ = *src++);
+
+	return ret;
+}
+
+int main()
+{
+	char* p1 = "hello";
+	char p2[10]; // 越界是抽查
+//	p2[10] = 1;
+//	p2[11] = 2;
+//	p2[12] = 3;
+//	p2[20] = 3;
+	my_strcpy(p2, p1);
+	printf("%s\n", p2);
+
+	return 0;
+}
+
+
+
+int main()
+{
+	char* p1 = "hello";
+	char p2[20];
+	strcpy(p2, "wor\0ld");
+
+	my_strcat(p2, p1);
+
+	printf("%s\n", p2);
+
+	return 0;
+}
+
+
+
