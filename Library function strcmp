@@ -1,0 +1,49 @@
+int my_(const char* str1, const char* str2)
+{
+	assert(str1 && str2);
+
+	while (*str1 && *str2)
+	{
+		if (*str1 > *str2)
+		{
+			return 1;
+		}
+		else if (*str1 < *str2)
+		{
+			return -1;
+		}
+		else
+		{
+			++str1;
+			++str2;
+		}
+	}
+
+	// "aaaa"  "aaaa"   0
+	// "aaaa"  "aaaaa"  -1
+	// "aaaaa" "aaaa"   1
+	if (*str1 == '\0' && *str2 == '\0')
+	{
+		return 0;
+	}
+	else if (*str1 == '\0')
+	{
+		return -1;
+	}
+	else
+	{
+		return 1;
+	}
+}
+
+int main()
+{
+	char* p1 = "hello";
+	char* p2 = "hello1";
+
+	printf("%d\n", strcmp(p1, p2));
+	printf("%d\n", my_strcmp(p1, p2));
+
+	return 0;
+}
+
