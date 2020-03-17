@@ -1,0 +1,32 @@
+void* my_(void* dest, const void* src, int count)
+{
+	void* ret = dest;
+	assert(dest != NULL);
+	assert(src != NULL);
+	while (count--)
+	{
+		*(char*)dest = *(char*)src;
+		((char*)dest)++;
+		((char*)src)++;
+	}
+	return ret;
+
+}
+
+int main()
+{
+	int arr1[6] = { 1, 2, 3, 4, 5, 6 };
+	int arr2[20] = { 0 };
+	memcpy(arr2, arr1, sizeof(arr1));
+
+	my_memcpy(arr2, arr1, sizeof(arr1));//拷贝的是字节数不是个数
+
+
+
+
+
+
+
+	return 0;
+
+}
